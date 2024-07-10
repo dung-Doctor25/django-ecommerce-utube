@@ -1,0 +1,44 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+ <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="display-4 mb-4">Order Item List <span class="badge badge-secondary">{{ orderitem_list|length }}</span>
+        <a href="" class = "btn btn-primary">Create Order Item</a>
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8">
+        <h2>Order Item List</h2>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Order Code</th>
+              <th scope="col">Product</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Quantity</th>
+              <th scope="col" style="width:25%">Total Price(bug-.-)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for orderitem in orderitem_list %}
+            <tr>
+              <td><a href="{{ orderitem.order.get_absolute_url }}">{{ orderitem.order.code }}</a></td>
+              <td><a href="{{ orderitem.product.get_absolute_url }}">{{ orderitem.product.name }}</a></td>
+              <td><a href="{{ orderitem.order.customer.get_absolute_url }}">{{ orderitem.order.customer }}</a></td>
+              <td>{{ orderitem.quantity }}</td>
+              <td>${{ orderitem.get_total }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% if not orderitem_list %}
+          <p class="lead">There are no order items.</p>
+        {% endif %}      
+      </div>
+    </div>
+
+
+{% endblock content %}

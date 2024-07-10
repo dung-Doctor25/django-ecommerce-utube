@@ -1,0 +1,27 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% block content %}
+  <div class="card mb-3" style="border: 1px solid #ccc;">
+    <img src="{{ product.imageURL }}" class="card-img-top" style="max-height: 500px; max-width: 100%;" alt="{{ product.name }}">
+    <div class="card-body">
+      <h5 class="card-title">{{ product.name }}</h5>
+      <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+      <p class="card-text"><strong>Code:</strong> {{ product.code }}</p>
+      <p class="card-text"><strong>Group code:</strong> {{ product.group_code }}</p>
+      <p class="card-text"><strong>Group name:</strong> {{ product.group_name }}</p>
+      
+      
+      <div class="card mb-3 " style="border: 1px solid #ccc;">
+        <div class="card-body">
+          <p class="card-text"><strong>Orders Containing:</strong> </p>
+          {% for order in product.orderitem_set.all %}
+          <p class="card-text"> - <a href="{{ order.order.get_absolute_url }}">{{ order.order.code }}</a></p>
+          {% empty %}
+          <p class="card-text">No orders containing this product.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

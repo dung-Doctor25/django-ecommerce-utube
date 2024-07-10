@@ -1,0 +1,44 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="display-4 mb-4">Customer List <span class="badge badge-secondary">{{ customer_list|length }}</span>
+        <a href="{% url 'add_customer' %}" class = "btn btn-primary">Create Customer</a>
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Customer Code</th>
+              <th>Name</th>
+              <th>Segment Code</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if customer_list %}
+            {% for customer in customer_list %}
+            <tr>
+              <td><a href="{{ customer.get_absolute_url }}">{{ customer.cus_code }}</a></td>
+              <td>{{ customer.name }}</td>
+              <td>{{ customer.segment_code }}</td>
+              <td>{{ customer.segment_decription }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td colspan="3"><p class="lead">There are no customers.</p></td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+

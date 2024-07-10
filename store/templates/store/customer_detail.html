@@ -1,0 +1,24 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% block content %}
+  <h1>Customer: {{ customer.cus_code }}</h1>
+
+  <p><strong>User:</strong> <a href="{{ customer.user.get_absolute_url }}">{{ customer.user }}</a></p>
+  <p><strong>Name:</strong> {{ customer.name }}</p>
+  <p><strong>Email:</strong> {{ customer.user.email }}</p>
+  <p><strong>Code:</strong> {{ customer.cus_code }}</p>
+  <p><strong>Segment:</strong> {{ customer.segment_code }}</p>
+  <p><strong>Segment description:</strong> {{ customer.segment_decription }}</p>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Orders</h4>
+
+    {% for order in customer.order_set.all %}
+      <hr />
+      <p><strong>Order:</strong> <a href="{{ order.get_absolute_url }}">{{ order.code }}</a></p>
+      <p><strong>Date Ordered:</strong> {{ order.date_ordered }}</p>
+      <p><strong>Transaction ID:</strong> {{ order.transaction_id }}</p>
+    {% endfor %}
+  </div>
+{% endblock %}
+

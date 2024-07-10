@@ -1,0 +1,63 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+  <div class="col">
+    <h1 class="display-4 mb-4">Order List <span class="badge badge-secondary">{{ order_list|length }}</span>
+    <a href="{% url 'add_order' %}" class = "btn btn-primary">Create Order</a>
+    </h1>
+  </div>
+</div>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Order Code</th>
+        <th>Customer Name</th>
+        <th>Total Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in order_list %}
+      <tr>
+        <td><a href="{{ order.get_absolute_url }}">{{ order.code }}</a></td>
+        <td>{{ order.customer.name }}</td>    
+        <td>{{ order.get_cart_items }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+  <!-- <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="display-4 mb-4">Order List <span class="badge badge-secondary">{{ order_list|length }}</span>
+        <a href="{% url 'add_order' %}" class = "btn btn-primary">Create Order</a>
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8">
+        <ul class="list-unstyled">
+          {% if order_list %}
+          {% for order in order_list %}
+          <li class="media my-4 border" style="border-width: 1px;">
+            <div class="media-body">
+              <h5 class="mt-0 mb-1">
+                <a href="{{ order.get_absolute_url }}">ID: {{ order.code }}</a>
+              </h5>
+              <p class="mb-0">{{ order.get_total }}</p>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+          <p class="lead">There are no orders.</p>
+        {% endif %}      
+      </div>
+    </div>
+  </div> -->
+
+{% endblock content %}

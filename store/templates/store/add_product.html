@@ -1,0 +1,51 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% block content %}
+<script>
+  $(document).ready(function() {
+    $("input").addClass("form-control").addAria("Sizing example input");
+    $("label").addClass("col-sm-2 control-label");
+    $("input").addAria("Sizing example input");
+  });
+</script>
+<form action="" method="POST" class="form-horizontal">
+  {% csrf_token %}
+  <h2>Add Product</h2>
+  <div class="form-group">
+    <label for="name" >Name</label>
+    <div class="col-sm">
+      <input type="text" name="name"  placeholder="Enter name" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="price" >Price</label>
+    <div class="col-sm">
+      <input type="number" name="price"  placeholder="Enter price" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="code" >Code</label>
+    <div class="col-sm">
+      <input type="text" name="code" placeholder="Enter code" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="group_code" >Group code</label>
+    <div class="col-sm">
+      <input type="text" name="group_code" placeholder="Enter group code" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="group_name" class="col-sm-2 control-label">Group name</label>
+    <div class="col-sm">
+      <input type="text" name="group_name" placeholder="Enter group name" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm">
+      <input type="submit" value="Submit" class="btn btn-primary">
+    </div>
+  </div>
+</form>
+
+{% endblock %}

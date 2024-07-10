@@ -1,0 +1,21 @@
+{% extends "store/main.html" %}
+
+{% block content %}
+  <h1>ID: {{ order.code }}</h1>
+
+  <p><strong>Customer:</strong> <a href="{{ order.customer.get_absolute_url }}">{{ order.customer }}</a></p>
+  <p><strong>Date Ordered:</strong> {{ order.date_ordered }}</p>
+  <p><strong>Date Added:</strong> {{ order.orderitem_set.first.date_added }}</p>
+  <p><strong>Transaction ID:</strong> {{ order.transaction_id }}</p>
+  <!-- <p><strong>Total Price:</strong> ${{ order.orderitem_set.all.get_total|floatformat:2 }}</p> -->
+  <div style="margin-left:20px;margin-top:20px">
+    {% for item in order.orderitem_set.all %}
+      <h4>Items</h4>
+
+        <hr />
+       <p><strong>Product:</strong> <a href="{{ item.product.get_absolute_url }}">{{ item.product }}</a></p>
+       <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+       <p><strong>Total:</strong> ${{ item.get_total|floatformat:2 }}</p>
+    {% endfor %}
+  </div>
+{% endblock %}

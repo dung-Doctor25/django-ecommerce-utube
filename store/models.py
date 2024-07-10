@@ -1,25 +1,34 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 # Create your models here.
 
 class Customer(models.Model):
 	user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 	name = models.CharField(max_length=200, null=True)
 	email = models.CharField(max_length=200)
-
+	cus_code = models.CharField(max_length=8, null=True, blank=True)
+	segment_code = models.CharField(max_length=2, null=True, blank=True)
+	segment_decription = models.TextField(max_length=200, null=True, blank=True)
 	def __str__(self):
 		return self.name
 
+	def get_absolute_url(self):
+		return reverse('customer-detail', args=[str(self.id)])
 
 class Product(models.Model):
 	name = models.CharField(max_length=200)
 	price = models.FloatField()
 	digital = models.BooleanField(default=False,null=True, blank=True)
 	image = models.ImageField(null=True, blank=True)
-
+	code = models.CharField(max_length=5, null=True, blank=True)
+	group_code = models.CharField(max_length=3, null=True, blank=True)
+	group_name = models.CharField(max_length=200, null=True, blank=True)
 	def __str__(self):
 		return self.name
+	
+	def get_absolute_url(self):
+		return reverse('product-detail', args=[str(self.id)])
 
 	@property
 	def imageURL(self):
@@ -34,10 +43,15 @@ class Order(models.Model):
 	date_ordered = models.DateTimeField(auto_now_add=True)
 	complete = models.BooleanField(default=False)
 	transaction_id = models.CharField(max_length=100, null=True)
-
+	code = models.CharField(max_length=11, null=True, blank=True)
+	
+	
+	
+	
 	def __str__(self):
 		return str(self.id)
-		
+	def get_absolute_url(self):
+		return reverse('order-detail', args=[str(self.id)])
 	@property
 	def shipping(self):
 		shipping = False
@@ -64,11 +78,13 @@ class OrderItem(models.Model):
 	order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
 	quantity = models.IntegerField(default=0, null=True, blank=True)
 	date_added = models.DateTimeField(auto_now_add=True)
-
+	def __str__(self):
+		return str(self.id)
 	@property
 	def get_total(self):
 		total = self.product.price * self.quantity
 		return total
+
 
 class ShippingAddress(models.Model):
 	customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
